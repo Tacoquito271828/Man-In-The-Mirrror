@@ -38,3 +38,15 @@ Una vez el MiTM fue conseguido lo siguiente es decidir que vamos a hacer con tod
 Ya con el objetivo decidido el tercer paso es montar los servidores o servicios como se menciona en el paso 2 y por ultimo deberemos configurar nuestras reglas enrutamiento con iptables para conseguir redirigir todo el trafico a nuestros servicios maliciosos.
 
 ### Link Start
+- Lo primero que vamos a realizar es la configuracion del ruteo atravez de ip tables, lo que vamos a hacer basicamente es redirigir todo el trafico que vaya para cualquier ip y que este pasando a travez de nuestra maquina y con destino los puertos 80, 139, 445, 3379... hacia nuestra ip en nuestros respectivos puertos 80, 139, 445, 3379...
+```
+# Listar nuestras reglas de iptables en la tabla nat que es la que nos interesa para ver que no halla nada raro o en conflicto
+sudo iptables -L -t nat
+
+# Agregar las reglas de prerouting para redirigir todo paquete con destino al puerto 80, 139, 445, 3379 a nuestros puertos que despues seran abiertos con Responder
+sudo iptables -t nat -A PREROUTING -j DNAT
+
+# Ahora hay que activar el enmascaramiento para que el paquete pase a ser cosiderado propio y pueda ser modificado (O algo asi, mi especialidad no es iptables jejeje)
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+
+```
