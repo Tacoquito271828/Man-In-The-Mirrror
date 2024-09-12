@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo Usage "./Man-in-The-Mirror.sh [Interface] [PUERTO/S; /Separados por coma; 0 para puertos default]"
+echo "Usage ./Man-in-The-Mirror.sh [Interface] [PUERTO/S; /Separados por coma; 0 para puertos default]"
+echo "Ejemplo ./Man-in-The-Mirror.sh eth0 80,443,445,139,3389,25
 
 ip=$(ifconfig $1 | grep -i "inet" | grep -v inet6|  awk '{print $2}')
 
