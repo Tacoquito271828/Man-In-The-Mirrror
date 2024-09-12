@@ -40,8 +40,8 @@ Ya con el objetivo decidido el tercer paso es montar los servidores o servicios 
 ### Link Start
 - Lo primero que vamos a realizar es la configuracion del ruteo atravez de ip tables, lo que vamos a hacer basicamente es redirigir todo el trafico que vaya para cualquier ip y que este pasando a travez de nuestra maquina y con destino los puertos 80, 139, 445, 3389... hacia nuestra ip en nuestros respectivos puertos 80, 139, 445, 3389...  (Recientemete desarrolle un script que es capaz de configurar de manera automatica las siguientes reglas).
 ```
-# Simplemente ejecuta el script presente en este repo de la forma ./man-in-the-mirror.sh [INTERFAZ] [PUERTOS]
-# Un ejemplo seria ./man-in-the-mirror.sh eth0 80,443,445,139,3389,25
+# Simplemente ejecuta el script presente en este repo de la forma ./Man-in-The-Mirror.sh [INTERFAZ] [PUERTOS]
+# Un ejemplo seria ./Man-in-The-Mirror.sh eth0 80,443,445,139,3389,25
 # O configura las reglas de manera manual como se indica a continuacion
 
 # Listar nuestras reglas de iptables en la tabla nat que es la que nos interesa para ver que no halla nada raro o en conflicto
