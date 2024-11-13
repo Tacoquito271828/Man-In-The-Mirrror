@@ -12,4 +12,7 @@ En un futuro agregare la funcionalidad al script, pero de momento es necesario c
 directamente configurar las reglas para ipv4 con iptables y las reglas para ipv6 con ip6tables, ambas tienen practimente la misma sintaxis. Por lo que para configurar nuestras reglas y abusar de ipv6 simplemente sera cambiar el comando y cambiar la ip a donde redirigiremos
 el trafico (Notese que para tener una ipv6 que configurar deberemos haber lanzado primero mitm6).
 
+sea mi ipv6 2001:db8::1 donde se supone que en mi puerto 80 se aloja mi sitio de phishing, el comando seria el siguiente:
+sudo ip6tables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination [2001:db8::1]:80
+
 Under Construction... Let me cook.
