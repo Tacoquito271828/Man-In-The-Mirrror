@@ -19,3 +19,6 @@ im=$(echo $2 | sed 's/,/\n/g' | wc -l)
 i=1
 
 while [ "$i" -le "$im" ]; do sudo iptables -t nat -A PREROUTING -p tcp --dport $(echo $2 | awk -F ',' -v i=$i '{print $i}') -j DNAT --to-destination $ip:$(echo $2 | awk -F ',' -v i=$i '{print $i}'); i=$(($i+1)); done && sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+
+echo "Nueva tabla: \n"
+sudo iptables -L -t nat
