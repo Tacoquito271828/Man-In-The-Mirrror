@@ -70,6 +70,9 @@ Por ultimo ya con los servidores arriba lo unico que falta es conseguir el MiTM 
 - Como tal vamos a utilizar el modulo de arp.spoof de Bettercap el cual realizara un arp spoofing redirigiendo todo el trafico del segmento seleccionado hacia nuestra ip
 ```
 # Lo primero que vamos a realizar sera iniciar Bettercap
+# Notese que si queremos automatizarlo un poco mas podemos usar un comando como el siguiente y faltaria unicamente configurar los targets e iniciar el arp.spoofing:
+# sudo bettercap -autostart events.stream,net.probe,net.sniff -iface wlan0 -eval "set arp.spoof.internal true"\;"set arp.spoof.fullduplex true"\;"net.show"
+
 sudo bettercap
 
 # Ahora deberemos validar las configuraciones y los modulos encendidos para eso podemos usar el comando help y help {modulo}
